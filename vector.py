@@ -23,8 +23,8 @@ if openai_api_key:
 uploaded_files = st.file_uploader("Upload documents (PDF, Excel, or TXT)", accept_multiple_files=True)
 
 # Select chunk size and chunk overlap
-chunk_size = st.slider("Select chunk size", min_value=100, max_value=2000, value=200, step=100)
-chunk_overlap = st.slider("Select chunk overlap", min_value=0, max_value=500, value=10, step=10)
+chunk_size = st.slider("Select chunk size", min_value=100, max_value=2000, value=1000, step=100)
+chunk_overlap = st.slider("Select chunk overlap", min_value=0, max_value=500, value=0, step=10)
 
 def load_documents(uploaded_files):
     all_docs = []
@@ -34,7 +34,7 @@ def load_documents(uploaded_files):
             f.write(uploaded_file.getbuffer())
 
         if uploaded_file.name.endswith(".pdf"):
-            loader = PyPDFLoader(file_path, extract_images=True)
+            loader = PyPDFLoader(file_path, extract_images=False)
         elif uploaded_file.name.endswith(".xlsx"):
             loader = UnstructuredExcelLoader(file_path)
         elif uploaded_file.name.endswith(".txt"):
